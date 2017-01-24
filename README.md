@@ -1,8 +1,6 @@
-# PictureToASCII
+# picture-to-ascii
 ### About
-A program that converts images to ASCII art.
-
-Made with the Java programming language and API.
+A simple, lightweight image to ascii art conversion utility made using Java.
 
 ### Authors
 Christopher Medlin and Ivan Kenevich
