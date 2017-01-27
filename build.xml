@@ -3,6 +3,7 @@
 	<property name="build" location="build"/>
 	<property name="lib" location="src/main/resources/lib"/>
 	<property name="img" location="src/main/resources/images"/>
+	<property name="dist" location="dist/"/>
 
 	<target name="init">
 		<mkdir dir="${build}"/>
@@ -23,11 +24,12 @@
 	</target>
 
 	<target name="run">
-		<java fork="true" jar="${lib}/picture-to-ascii.jar"/>
+		<java fork="true" jar="${dist}/picture-to-ascii.jar"/>
 	</target>
 
 	<target name="jar">
-		<jar destfile="${lib}/picture-to-ascii.jar" basedir="build" includes="**/* ../${img}/*">
+		<mkdir dir="${dist}"/>
+		<jar destfile="${dist}/picture-to-ascii.jar" basedir="build" includes="**/* ../${img}/*">
 			<manifest>
 				<attribute name="Main-Class" value="com.medlinchristopher.picturetoascii.Main"/>
 			</manifest>
