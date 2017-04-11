@@ -27,9 +27,7 @@ import com.medlinchristopher.picturetoascii.util.OSUtils;
 * @since 0.1
 * @version 1.0
 */
-public class ASCIIConverterFrame extends JFrame implements ActionListener
-{
-	//declare class level variables
+public class ASCIIConverterFrame extends JFrame implements ActionListener {
 	private JTextField pathTextField;
 	private JButton generate, options, browse;
 	private ASCIIOptionsFrame optionsWindow;
@@ -55,7 +53,7 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener
 		
 		runtime = Runtime.getRuntime();
 		//set specifications for frame
-	        setTitle("picture-to-ascii v1.0");
+		setTitle("picture-to-ascii v1.0");
 		setSize(new Dimension(400, 150));
 		setLocation(windowLocation.x - 315/2, windowLocation.y - 150/2);
 		setResizable(false);
@@ -112,8 +110,7 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener
 	/**
 	* Generates ASCII art.
 	*/
-        private	void generate () 
-	{
+	private	void generate () {
 		
 		boolean success = true;
 		int fontSize = 0;
@@ -215,8 +212,7 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener
 	}
 	
 	@Override
-	public void actionPerformed (ActionEvent e)
-	{
+	public void actionPerformed (ActionEvent e) {
 		if (e.getSource()==options)
 		{
 			optionsWindow.setVisible(true);

@@ -27,7 +27,7 @@
 		<java fork="true" jar="${dist}/picture-to-ascii.jar"/>
 	</target>
 
-	<target name="jar">
+	<target name="jar" depends="build">
 		<mkdir dir="${dist}"/>
 		<jar destfile="${dist}/picture-to-ascii.jar" basedir="build" includes="**/* ../${img}/*">
 			<manifest>

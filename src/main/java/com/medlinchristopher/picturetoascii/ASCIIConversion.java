@@ -20,8 +20,7 @@ import com.medlinchristopher.picturetoascii.util.OSUtils;
 * @since 0.2
 */
 
-public class ASCIIConversion 
-{
+public class ASCIIConversion {
     //Declaration of large, medium, and small character sets.
     private static final char[] LARGE_CHAR_SET = new String("@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|1?-_+~i!lI;:,^`'. ").toCharArray(); //61 chars
     private static final char[] MEDIUM_CHAR_SET = new String("@B8&M#oakbpqmZ0QCJYXcvnxjf/|?-+~!l;:^`. ").toCharArray(); //40 chars
@@ -40,34 +39,33 @@ public class ASCIIConversion
     * @param charSetSize   The size of the array of characters that the ASCII generator has to choose from.
     * @return          A character array containing the ASCII art.
     */    
-    public static char[][] imageToASCII (BufferedImage img, int pixelsPerChar, int charSetSize)
-    {
+    public static char[][] imageToASCII (BufferedImage img, int pixelsPerChar, int charSetSize) {
         int argb, red, green, blue, imgHeight, imgWidth, blockAverage, stepSize;
 
         BufferedImage tempImage = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
-	tempImage.createGraphics().drawImage(img, 0, 0, Color.WHITE, null);
-	img = tempImage;
+    	tempImage.createGraphics().drawImage(img, 0, 0, Color.WHITE, null);
+	    img = tempImage;
         imgHeight = img.getHeight();
         imgWidth = img.getWidth();
-	tempImage = null;
+	    tempImage = null;
 
         //Takes into account whether pixel density is odd or even, and essentially crops the ASCII art accordingly.
         int[][] greyscale = new int[imgHeight - (imgHeight % pixelsPerChar)][imgWidth - (imgWidth % pixelsPerChar)];
         char[][] asciiArt = new char[greyscale.length/pixelsPerChar][greyscale[1].length/pixelsPerChar];
 	
-	//Step size is a variable used in generateChar()
-	//Each stepsize forms a range in which a certain character will be generated if a greyscale value falls within that range.
-	//stepsize is calculated outside of generateChar() so that it only has to be calculated once instead of for each character.
-	stepSize = 0;	
-	if (charSetSize == 0) {
-		stepSize = 12;
-	}
-	else if (charSetSize == 1) {
-		stepSize = 6;
-	}
-	else if (charSetSize == 2) {
-		stepSize = 4;
-	}
+	    //Step size is a variable used in generateChar()
+	    //Each stepsize forms a range in which a certain character will be generated if a greyscale value falls within that range.
+	    //stepsize is calculated outside of generateChar() so that it only has to be calculated once instead of for each character.
+	    stepSize = 0;
+	    if (charSetSize == 0) {
+	    	stepSize = 12;
+	    }
+	    else if (charSetSize == 1) {
+	    	stepSize = 6;
+	    }
+	    else if (charSetSize == 2) {
+	    	stepSize = 4;
+	    }
         
         //generates greyscale array
         for (int row = 0; row < greyscale.length; row++) 
@@ -124,8 +122,7 @@ public class ASCIIConversion
     * @param stepSize  Size of each iteration by how many greyscale values are covered by each character.
     * @return          A character of varying darkness which is based on greyscale and stepSize.
     */
-    private static char generateChar (int greyscale, int stepSize) 
-    {
+    private static char generateChar (int greyscale, int stepSize) {
 		char[] charSet;
 		//if a character falls into none of the below boolean statements, that means it is a very bright
 		//greyscale value and the character remains a space.
@@ -165,10 +162,10 @@ public class ASCIIConversion
     *
     * @param asciiArt The ASCII art to be written to a file.
     * @param path     The path to the file in which the ASCII art will be written.
-    * @throws an IOException if the file path specified cannot be found.
+    * @throws IOException if the file path specified cannot be found.
     */
-    public static void writeASCIIToFile (char[][] asciiArt, String path) throws IOException 
-    {
+    @Deprecated //for now
+    public static void writeASCIIToFile (char[][] asciiArt, String path) throws IOException {
         PrintWriter writer = new PrintWriter(new FileWriter(path,true));
         
         for (int row = 0; row < asciiArt.length; row++) {
@@ -195,42 +192,41 @@ public class ASCIIConversion
      *
      * @param asciiArt the ASCII art to be written to a file.
      */	
-    public static boolean writeASCIIToImage (char[][] asciiArt, int fontSize, String path)
-    {
-	int spacing = fontSize + 2;
-	BufferedImage img;
+    public static boolean writeASCIIToImage (char[][] asciiArt, int fontSize, String path) {
+	    int spacing = fontSize + 2;
+	    BufferedImage img;
 
-	String tempPath = "";
-	if (OSUtils.isWindows())
-		tempPath = System.getProperty("user.home") + "\\My Documents\\picture-to-ascii\\temp";
-	else if (OSUtils.isUnixOrLinux()) 
-		tempPath = System.getProperty("user.home") + "/.picture-to-ascii/temp";
-	else
-		return false;
+	    String tempPath = "";
+	    if (OSUtils.isWindows())
+	    	tempPath = System.getProperty("user.home") + "\\My Documents\\picture-to-ascii\\temp";
+	    else if (OSUtils.isUnixOrLinux())
+	    	tempPath = System.getProperty("user.home") + "/.picture-to-ascii/temp";
+    	else
+		    return false;
 
         try {
-		img = BigBufferedImage.create(new File(tempPath), asciiArt[0].length * spacing, (asciiArt.length * spacing) + spacing, BufferedImage.TYPE_INT_RGB);
-	} catch (IOException e) {
-		return false;
-	}
+	    	img = BigBufferedImage.create(new File(tempPath), asciiArt[0].length * spacing, (asciiArt.length * spacing) + spacing, BufferedImage.TYPE_INT_RGB);
+    	} catch (IOException e) {
+	    	return false;
+	    }
 
-	Graphics2D g2 = img.createGraphics();
-	g2.setColor(Color.WHITE);
-	g2.setFont(new Font("Meme font", Font.PLAIN, fontSize));
-	g2.fillRect(0,0, asciiArt[0].length * spacing, (asciiArt.length * spacing) + spacing);
-	g2.setColor(Color.BLACK);
-	for (int i = 0; i < asciiArt.length; i++) {
+	    Graphics2D g2 = img.createGraphics();
+	    g2.setColor(Color.WHITE);
+	    g2.setFont(new Font("Meme font", Font.PLAIN, fontSize));
+	    g2.fillRect(0,0, asciiArt[0].length * spacing, (asciiArt.length * spacing) + spacing);
+	    g2.setColor(Color.BLACK);
+	    for (int i = 0; i < asciiArt.length; i++) {
 	       for (int j = 0; j < asciiArt[0].length; j++) {
 		       g2.drawString(String.valueOf(asciiArt[i][j]), j * spacing, (i * spacing) + spacing);
 	       }
-	}
+	    }
 
-	try {
-		ImageIO.write(img, "png", new File(path));
-	} catch (IOException e) {
-		return false;
-	}
+	    try {
+	    	ImageIO.write(img, "png", new File(path));
+	    } catch (IOException e) {
+	    	return false;
+	    }
 	
-	return true;
+	    return true;
     }
 }
