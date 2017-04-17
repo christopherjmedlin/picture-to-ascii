@@ -8,9 +8,7 @@ package com.medlinchristopher.picturetoascii.util;
  * @version 1.0
  * @since 0.7
 */
-
-public class OSUtils 
-{
+public class OSUtils {
 
 	/**
 	 * Checks if current user's OS is Windows based.
@@ -18,14 +16,11 @@ public class OSUtils
 	 * @return Boolean value repesenting whether or not user's OS is Windows based.
 	 *
 	*/
-	public static boolean isWindows () 
-	{
-		if (System.getProperty("os.name").startsWith("Windows")) 
-		{
+	public static boolean isWindows () {
+		if (System.getProperty("os.name").startsWith("Windows")) {
 			return true;
 		}
-		else
-		{
+		else {
 			return false;
 		}
 	}
@@ -36,15 +31,12 @@ public class OSUtils
 	 * @return Boolean value representing whether or not user's OS is Unix or Linux based.
 	 *
 	*/
-	public static boolean isUnixOrLinux ()
-	{
+	public static boolean isUnixOrLinux () {
 		String os = System.getProperty("os.name");
-		if (os.startsWith("Linux") || os.startsWith("Unix")) 
-		{
+		if (os.startsWith("Linux") || os.startsWith("Unix")) {
 			return true;
 		}
-		else 
-		{
+		else {
 			return false;
 		}
 	}

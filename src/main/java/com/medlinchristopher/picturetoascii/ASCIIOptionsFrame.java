@@ -25,7 +25,7 @@ import com.medlinchristopher.picturetoascii.util.OSUtils;
 * @version 1.0
 * @since 0.3
 */
-
+@Deprecated
 public class ASCIIOptionsFrame extends JFrame implements ActionListener
 {
 	// Explanatory labels

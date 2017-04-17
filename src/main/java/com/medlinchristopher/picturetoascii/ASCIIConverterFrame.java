@@ -27,6 +27,7 @@ import com.medlinchristopher.picturetoascii.util.OSUtils;
 * @since 0.1
 * @version 1.0
 */
+@Deprecated
 public class ASCIIConverterFrame extends JFrame implements ActionListener {
 	private JTextField pathTextField;
 	private JButton generate, options, browse;
@@ -50,8 +51,7 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener {
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		setupGUI();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		runtime = Runtime.getRuntime();
+
 		//set specifications for frame
 		setTitle("picture-to-ascii v1.0");
 		setSize(new Dimension(400, 150));
@@ -141,6 +141,7 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener {
 			programStatus.setForeground(Color.RED);
 			programStatus.setText("ERROR: Improper argument for font size.");
 		}
+
 		//read image
 		try {
 			img = ImageIO.read(new File(pathTextField.getText()));
@@ -161,8 +162,6 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener {
 			picOutputPath = optionsWindow.getOutputPath() + removeFileExtension(pathTextField.getText()) + ".png";
 		} catch (StringIndexOutOfBoundsException e) {}
 
-		
-
 		//generate ASCII
 		if (success) {
 			if (!ASCIIConversion.writeASCIIToImage(ASCIIConversion.imageToASCII(img, pixelDensity, charSetSize), fontSize, picOutputPath)) {
@@ -170,11 +169,7 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener {
 				programStatus.setText("ERROR: Output path not recognized.");		
 			}
 		}	
-			
-				
-			
-    
-		
+
 		if (success)
 			programStatus.setText("ASCII art generated: " + picOutputPath);
 		
