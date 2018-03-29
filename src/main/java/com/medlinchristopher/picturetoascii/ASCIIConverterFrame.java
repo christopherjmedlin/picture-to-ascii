@@ -6,9 +6,11 @@ import java.awt.event.*;
 import javax.imageio.*;
 import java.awt.image.*;
 import java.io.*;
+import java.util.concurrent.ExecutionException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.medlinchristopher.picturetoascii.util.OSUtils;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 /**
 * A JFrame containing various UI elements for the Picture to ASCII program. 
@@ -164,15 +166,10 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener {
 
 		//generate ASCII
 		if (success) {
-			if (!ASCIIConversion.writeASCIIToImage(ASCIIConversion.imageToASCII(img, pixelDensity, charSetSize), fontSize, picOutputPath)) {
-				success = false;
-				programStatus.setText("ERROR: Output path not recognized.");		
-			}
-		}	
-
-		if (success)
-			programStatus.setText("ASCII art generated: " + picOutputPath);
-		
+			programStatus.setText("Generating...");
+			ASCIIWorker asciifier = new ASCIIWorker(fontSize, picOutputPath);
+			asciifier.execute();
+		}
 	}
 	
 	private String removeFileExtension (String str) {
@@ -224,6 +221,32 @@ public class ASCIIConverterFrame extends JFrame implements ActionListener {
 										"bmp", "png", "wbmp"));
 			if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION)
 				pathTextField.setText(fileChooser.getSelectedFile().getPath());
+		}
+	}
+
+	private class ASCIIWorker extends SwingWorker<Boolean, Void> {
+		private int fontSize;
+		private String picOutputPath;
+
+		public ASCIIWorker(int fontSize, String picOutputPath) {
+			this.fontSize = fontSize;
+			this.picOutputPath = picOutputPath;
+		}
+		@Override
+		protected Boolean doInBackground() throws Exception {
+			return ASCIIConversion.writeASCIIToImage(ASCIIConversion.imageToASCII(img, pixelDensity, charSetSize), fontSize, picOutputPath);
+		}
+
+		public void done() {
+			try {
+				if (!get()) {
+                    programStatus.setText("ERROR: Output path not recognized.");
+                }
+                else {
+                    programStatus.setText("ASCII art generated: " + picOutputPath);
+                }
+			} catch (InterruptedException | ExecutionException ignore) {
+			}
 		}
 	}
 }
